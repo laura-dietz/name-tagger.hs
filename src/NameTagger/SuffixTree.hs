@@ -46,7 +46,7 @@ merge :: Ord char
 merge reduce (SuffixTree chmap1 v1) (SuffixTree chmap2 v2)  =
     let childmap = M.unionWith (merge reduce) chmap1 chmap2
         nodevalue =
-            case (value1, value2) of
+            case (v1, v2) of
                 (Nothing, Nothing) -> Nothing
                 (Just v1, Nothing) -> Just v1
                 (Nothing, Just v2) -> Just v2
