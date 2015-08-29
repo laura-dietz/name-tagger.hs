@@ -5,6 +5,8 @@ import qualified Data.Map.Strict as M
 import Data.Monoid
 import Control.Applicative hiding (empty)
 
+-- | @SuffixTree char value@ is a suffix tree over alphabet @char@ with values
+-- of type @value@ sitting at the terminal nodes.
 data SuffixTree char value
     = SuffixTree { suffixes :: !(M.Map char (SuffixTree char value))
                  , terminus :: !(Maybe value)
@@ -32,7 +34,10 @@ lookup (SuffixTree children _) ch = M.lookup ch children
 empty :: SuffixTree char value
 empty = SuffixTree M.empty Nothing
 
-singleton :: [char] -> value -> SuffixTree char value
+-- | A singleton 'SuffixTree'
+singleton :: [char]                -- ^ the sequence
+          -> value                 -- ^ the associated value
+          -> SuffixTree char value -- ^ the singleton
 singleton (ch:text) termvalue =
     SuffixTree (M.singleton ch (singleton text termvalue) ) Nothing
 singleton [] termvalue =
